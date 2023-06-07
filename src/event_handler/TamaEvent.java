@@ -53,10 +53,5 @@ public class TamaEvent extends Event {
 
             }
         }
-        try {
-            TimeUnit.MILLISECONDS.sleep(1500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 }

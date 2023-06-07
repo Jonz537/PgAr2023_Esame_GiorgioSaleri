@@ -113,13 +113,7 @@ public class World {
                 boss.attackPlayer(isekaiMc);
             }
             UserInterface.printBattleInfo(isekaiMc, boss);
-
-            // waiting
-            try {
-                TimeUnit.MILLISECONDS.sleep(3500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            
         }
 
         if (boss.getHealthPoints() < 0) {

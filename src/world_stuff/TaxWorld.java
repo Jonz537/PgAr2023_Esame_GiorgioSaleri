@@ -70,11 +70,6 @@ public class TaxWorld extends World{
                 // failed corruption
             } else if (isekaiMc.isTaxEvader()) {
                 goToJail(isekaiMc);
-                try {
-                    TimeUnit.MILLISECONDS.sleep(1500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
                 break;
             }
 
@@ -100,11 +95,6 @@ public class TaxWorld extends World{
             errorTax(isekaiMc);
         }
 
-        try {
-            TimeUnit.MILLISECONDS.sleep(1500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
     }
 

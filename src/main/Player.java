@@ -133,7 +133,7 @@ public class Player {
     }
 
     public void addMoney(int money) {
-        money += money;
+        this.money += money;
     }
 
     public ArrayList<TamaGolem> getTamaGolems() {

@@ -68,7 +68,11 @@ public class Dijkstra {
     }
 
     public static String returnNextMove(Node node) {
-        return pathFromStart.get(node).get(0).toString();
+        try {
+            return pathFromStart.get(node).get(0).toString();
+        } catch (IndexOutOfBoundsException e) {
+            return null;
+        }
     }
 
 }

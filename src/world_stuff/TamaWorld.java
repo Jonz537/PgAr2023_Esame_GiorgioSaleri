@@ -152,12 +152,6 @@ public class TamaWorld extends World{
                     }
                     break;
                 }
-                // waiting
-                try {
-                    TimeUnit.SECONDS.sleep(2);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
             }
         }
     }

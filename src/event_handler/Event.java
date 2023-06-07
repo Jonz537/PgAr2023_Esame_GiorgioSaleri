@@ -26,6 +26,8 @@ public class Event {
                 mod = random.nextInt(-3, 4);
             }
         }
+
+        UserInterface.printInteractEvent(mod, eventType);
     }
 
     /**

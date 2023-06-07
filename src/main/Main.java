@@ -15,7 +15,7 @@ import java.util.Random;
 
 public class Main {
 
-    public static final int WOLRDS_NUMBERS = 1;
+    public static final int WOLRDS_NUMBERS = 4;
     public static String[] worldTypeList = new String[WOLRDS_NUMBERS];
     public static ArrayList<Node> defaultMap = new ArrayList<>();
 
@@ -47,14 +47,10 @@ public class Main {
         maps.add(defaultMap);
 
         for (int i = 0; i < WOLRDS_NUMBERS; i++) {
-//            switch (random.nextInt(0,3)) {
-            switch (random.nextInt(2,3)) {
+            switch (random.nextInt(0,3)) {
                 case 0 -> worlds.add(new World(maps.get(random.nextInt(0,3))));
                 case 1 -> worlds.add(new TaxWorld(maps.get(random.nextInt(0,3))));
-                case 2 -> {
-//                    worlds.add(new TamaWorld(maps.get(random.nextInt(0,3))));
-                    worlds.add(new TamaWorld(defaultMap));
-                }
+                case 2 -> worlds.add(new TamaWorld(maps.get(random.nextInt(0,3))));
             }
             worldTypeList[i] = worlds.get(i).getType();
         }

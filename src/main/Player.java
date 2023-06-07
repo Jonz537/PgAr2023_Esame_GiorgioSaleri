@@ -27,7 +27,7 @@ public class Player {
     /**
      * 5.4.1 Modulo tamagolem
      */
-    public static final int INITIAL_TAMAGOLEM_NUMBER = 2;
+    public static final int INITIAL_TAMAGOLEM_NUMBER = 3;
     private ArrayList<TamaGolem> tamaGolems = new ArrayList<>();
 
     public Player(String name) {

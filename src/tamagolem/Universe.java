@@ -1,6 +1,10 @@
 package tamagolem;
 
+import main.UserInterface;
+import world_stuff.TamaWorld;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -100,13 +104,21 @@ public class Universe {
      * @param golem2 gem
      * @return damage inflicted
      */
-    public static int calcDamage(TamaGolem golem1, TamaGolem golem2) {
+    public static int calcDamage(TamaGolem golem1, TamaGolem golem2, boolean isFinalBoss) {
         // damage = 0 --> equal gem
         // damage < 0 --> second better
         // damage > 0 --> first better
 
         Random random = new Random();
-        int gem1 = golem1.choseGem(), gem2 = golem2.getGems().get(random.nextInt(0, golem2.getGems().size()));
+        int gem1, gem2;
+        if (isFinalBoss) {
+            // todo computer choose best option knowing the universe when is final boss
+            gem1 = golem1.choseGem();
+            gem2 = golem2.getGems().get(random.nextInt(0, golem2.getGems().size()));
+        } else {
+            gem1 = golem1.choseGem();
+            gem2 = golem2.getGems().get(random.nextInt(0, golem2.getGems().size()));
+        }
 
         if (gem1 == gem2) {
             return 0;
@@ -180,5 +192,41 @@ public class Universe {
                 }
             }
         }
+    }
+
+    public static void doubleBalance() {
+        for (int i = 0; i < equilibrium.length; i++) {
+            for (int j = 0; j < equilibrium.length * 5 + 14; j++) {
+                equilibrium[i][j] *= 2;
+            }
+        }
+    }
+
+    public static void strongerForces(HashMap<String, Integer> gems) {
+        int firstElement = UserInterface.chooseElementalGem(gems, "choose gem to power up");
+        int secondElement = UserInterface.chooseElementalGem(gems, "choose gem to power down");
+
+        for (int i = 0; i < Universe.equilibrium.length; i++) {
+            if (i != firstElement && i!= secondElement) {
+                equilibrium[i][firstElement] -= 1;
+                equilibrium[firstElement][i] += 1;
+            }
+        }
+        equilibrium[firstElement][secondElement] = -(TamaWorld.NUM_ELEMENT - 2);
+        equilibrium[secondElement][firstElement] = (TamaWorld.NUM_ELEMENT - 2);
+    }
+
+    public static void weakerForces(HashMap<String, Integer> gems) {
+        int firstElement = UserInterface.chooseElementalGem(gems, "choose gem to power down");
+        int secondElement = UserInterface.chooseElementalGem(gems, "choose gem to power up");
+
+        for (int i = 0; i < Universe.equilibrium.length; i++) {
+            if (i != firstElement && i!= secondElement) {
+                equilibrium[i][firstElement] += 1;
+                equilibrium[firstElement][i] -= 1;
+            }
+        }
+        equilibrium[firstElement][secondElement] = TamaWorld.NUM_ELEMENT - 2;
+        equilibrium[secondElement][firstElement] = -(TamaWorld.NUM_ELEMENT - 2);
     }
 }

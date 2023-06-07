@@ -32,7 +32,7 @@ public class UserInterface {
             System.out.println("You died!");
             return false;
         }
-        if(worlds.isEmpty()) {
+        if (worlds.isEmpty()) {
             System.out.println("You survived, now go back to your dull life");
             return false;
         }
@@ -125,7 +125,7 @@ public class UserInterface {
     }
 
     public static void printPlayerStatusGolem(Player isekaiMc) {
-        System.out.println(isekaiMc.getName() + " has " + isekaiMc.getTamaGolems().size());
+        System.out.println(isekaiMc.getName() + " has " + isekaiMc.getTamaGolems().size() + " tamagolems");
     }
 
     public static void printTamagolemStatus(TamaGolem tamaGolem) {
@@ -143,12 +143,61 @@ public class UserInterface {
 
     public static String menuChooseGem(HashMap<String, Integer> choices, Player player, int num_tama, int num__gem) {
 
-        System.out.println("\n" + player.getName() + " choose gem number " + num__gem +" for tamagolem number " + num_tama + ":");
+        System.out.println("\n" + player.getName() + " choose gem number " + num__gem + " for tamagolem number " + num_tama + ":");
 
         for (int i = 0; i < choices.size(); i++) {
             System.out.println(i + 1 + " - " + Universe.elements.get(i) + " (" + choices.get(Universe.elements.get(i)) + ")");
         }
 
         return Universe.elements.get(InputInterface.readInt("Choice: ", 1, choices.size()) - 1);
+    }
+
+    public static void mcGetDamageTama(Player isekaiMc, int damage, int tamaIndex) {
+        System.out.println("Enemy tamagolem inflicted " + (-damage) + " damage to the " + isekaiMc.getName() + "'s tamagolem");
+        System.out.println(isekaiMc.getName() + " your tamagolem has " + isekaiMc.getTamaGolems().get(tamaIndex).getHealthPoint() + " hp left");
+        System.out.println();
+    }
+
+    public static void mcDealsDamageTama(Player isekaiMc, int damage, TamaGolem enemy) {
+        System.out.println(isekaiMc.getName() + "'s tamagolem inflicted " + damage + " damage to the enemy's tamagolem");
+        System.out.println("enemy tamagolem has " + enemy.getHealthPoint() + " hp left");
+        System.out.println();
+    }
+
+    public static void tamagolemDeathByFight(Player isekaiMc) {
+        System.out.println(isekaiMc.getName() + "'s tamagolem is dead (tamagolem's left " + (isekaiMc.getTamaGolems().size()) + ")");
+        System.out.println();
+    }
+
+    public static void winSingleFightTama() {
+        System.out.println("You destroyed that pile of rocks");
+    }
+
+    public static void winSingleMatchTama() {
+        System.out.println("You also won this match, impressive!");
+    }
+
+    public static void printEnemyStones(TamaGolem enemy) {
+        System.out.println("the enemy has those stones:");
+        enemy.getGems().forEach(UserInterface::printGem);
+    }
+
+    public static void printGem(int gem) {
+        System.out.println(Universe.elements.get(gem));
+    }
+
+    public static void printDoubleDamageNotification() {
+        System.out.println("There has been a turbulence in the force! Alla damages are doubled");
+    }
+
+    public static int chooseElementalGem(HashMap<String, Integer> choices, String message) {
+
+        System.out.println(message);
+
+        for (int i = 0; i < choices.size(); i++) {
+            System.out.println(i + 1 + " - " + Universe.elements.get(i));
+        }
+
+        return InputInterface.readInt("Choice: ", 1, choices.size()) - 1;
     }
 }

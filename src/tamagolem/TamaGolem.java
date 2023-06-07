@@ -6,6 +6,7 @@ import world_stuff.TamaWorld;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Random;
 
 public class TamaGolem {
 
@@ -39,7 +40,7 @@ public class TamaGolem {
     public String[] gemToString() {
         String[] stringGem = new String[gems.size()];
         for (int i = 0; i < gems.size(); i++) {
-            stringGem[i] = String.valueOf(gems.get(i));
+            stringGem[i] = String.valueOf(Universe.elements.get(gems.get(i)));
         }
         return stringGem;
     }
@@ -114,5 +115,12 @@ public class TamaGolem {
 
     public void setMaxHealth() {
         this.healthPoint = Universe.getMaxDamage();
+    }
+
+    public void generateRandomStones() {
+        Random random = new Random();
+        for (int i = 0; i < GEMS_PER_GOLEM; i++) {
+            gems.add(random.nextInt(0, Universe.elements.size()));
+        }
     }
 }

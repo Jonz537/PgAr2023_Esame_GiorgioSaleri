@@ -1,16 +1,18 @@
 package world_stuff;
 
-import event_handler.Event;
+import event_handler.TamaEvent;
 import main.Player;
 import main.UserInterface;
 import tamagolem.TamaGolem;
 import tamagolem.Universe;
 import unibs.InputInterface;
-import unibs.MenuManager;
 import utils_bs.NodeType;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 public class TamaWorld extends World{
 
@@ -66,17 +68,95 @@ public class TamaWorld extends World{
     public void exploreNode(Player isekaiMc, int battlePos) {
         UserInterface.printPlayerStatusGolem(isekaiMc);
 
-        System.out.println("monke");
         if (map.get(battlePos).getType().equals(NodeType.FINE)) {
-            // todo final tamagolem fight
+            // create 2 random golem to fight
+            Deque<TamaGolem> tamaGolems = new ArrayDeque<>();
+
+            TamaGolem tamagolem1 = new TamaGolem();
+            tamagolem1.generateRandomStones();
+            tamaGolems.add(tamagolem1);
+
+            TamaGolem tamagolem2 = new TamaGolem();
+            tamagolem2.generateRandomStones();
+            tamaGolems.add(tamagolem2);
+
+            tamaFight(isekaiMc, tamaGolems, true);
         } else {
-            switch (random.nextInt(0,2)) {
+            switch (random.nextInt(0,1)) {
                 case 0 -> {
-                    // todo random mod
-                    new Event().playerInteract(isekaiMc);
+                    new TamaEvent(gems).playerInteract(isekaiMc);
                 }
                 case 1 -> {
-                    //todo tamagolem fight
+                    Deque<TamaGolem> tamaGolems = new ArrayDeque<>();
+
+                    TamaGolem tamagolem = new TamaGolem();
+                    tamagolem.generateRandomStones();
+                    tamaGolems.add(tamagolem);
+
+                    tamaFight(isekaiMc, tamaGolems, false);
+                }
+            }
+        }
+    }
+
+    private void tamaFight(Player isekaiMc, Deque<TamaGolem> enemyTamagolems, boolean isfinalBoss) {
+
+        while (true) {
+
+            isekaiMc.getTamaGolems().forEach(UserInterface::printTamagolemStatus);
+            int tamaIndex = InputInterface.readInt("Choose your tamagolem between 0 and " +
+                            (isekaiMc.getTamaGolems().size() - 1),
+                    0,isekaiMc.getTamaGolems().size());
+
+            TamaGolem enemy = enemyTamagolems.pop();
+            while (true) {
+
+                UserInterface.printEnemyStones(enemy);
+
+                int damage = Universe.calcDamage(isekaiMc.getTamaGolems().get(tamaIndex), enemy, isfinalBoss);
+
+                System.out.println(isekaiMc.getName() + " " + isekaiMc.getTamaGolems().get(tamaIndex).toString());
+                System.out.println(enemy);
+                System.out.println();
+
+                if (damage < 0) {
+                    // player 1 got damaged
+                    isekaiMc.getTamaGolems().get(tamaIndex).receiveDamage(damage);
+                    UserInterface.mcGetDamageTama(isekaiMc, damage, tamaIndex);
+                } else if (damage > 0) {
+                    // player 2 got damaged
+                    enemy.receiveDamage(damage);
+                    UserInterface.mcDealsDamageTama(isekaiMc, damage, enemy);
+                }
+
+                // tamagolem death
+                if (isekaiMc.getTamaGolems().get(tamaIndex).getHealthPoint() <= 0) {
+                    isekaiMc.getTamaGolems().remove(tamaIndex);
+                    UserInterface.tamagolemDeathByFight(isekaiMc);
+
+                    // player non more tamagolem
+                    if(isekaiMc.getTamaGolems().size() == 0) {
+                        return;
+                    }
+                    break;
+
+
+                } else if (enemy.getHealthPoint() <= 0) {
+                    // enemy died
+                    UserInterface.winSingleFightTama();
+
+                    // enemy lost all tamagolems
+                    if (enemyTamagolems.size() == 0) {
+                        UserInterface.winSingleFightTama();
+                        return;
+                    }
+                    break;
+                }
+                // waiting
+                try {
+                    TimeUnit.SECONDS.sleep(2);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         }

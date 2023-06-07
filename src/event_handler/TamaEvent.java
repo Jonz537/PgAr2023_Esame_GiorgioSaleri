@@ -3,12 +3,18 @@ package event_handler;
 import main.Player;
 import main.UserInterface;
 import tamagolem.TamaGolem;
+import tamagolem.Universe;
 import utils_bs.EventType;
-import world_stuff.TamaWorld;
+
+
+import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 public class TamaEvent extends Event {
 
-    public TamaEvent() {
+    HashMap<String, Integer> gems;
+
+    public TamaEvent(HashMap<String, Integer> gems) {
         switch (random.nextInt(0,2)) {
             case 0 -> {
                 eventType = EventType.TAMAHEALTH;
@@ -19,6 +25,7 @@ public class TamaEvent extends Event {
                 mod = random.nextInt(0, 3);
             }
         }
+        this.gems = gems;
     }
 
     @Override
@@ -32,9 +39,24 @@ public class TamaEvent extends Event {
                 UserInterface.deathOneTamagolem(isekaiMc);
             }
         } else {
-            // todo elemental event
-        }
+            switch (random.nextInt(0, 3)) {
+                case 0 -> {
+                    Universe.strongerForces(gems);
+                }
+                case 1 -> {
+                    Universe.weakerForces(gems);
+                }
+                case 2 -> {
+                    Universe.doubleBalance();
+                    UserInterface.printDoubleDamageNotification();
+                }
 
-        UserInterface.printInteractEvent(mod, eventType);
+            }
+        }
+        try {
+            TimeUnit.MILLISECONDS.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

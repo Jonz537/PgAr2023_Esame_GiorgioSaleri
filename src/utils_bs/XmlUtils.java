@@ -1,3 +1,6 @@
+package utils_bs;
+
+import world_stuff.Node;
 
 import javax.xml.stream.*;
 import java.io.FileInputStream;
@@ -9,8 +12,6 @@ public class XmlUtils {
 
     private static XMLInputFactory xmlIf = null;
     private static XMLStreamReader xmlR = null;
-    private static XMLOutputFactory xmlOf = null;
-    private static XMLStreamWriter xmlW = null;
 
     private static void initializeXMLReader(String filename) {
         try {
@@ -21,10 +22,10 @@ public class XmlUtils {
         }
     }
 
-    public static ArrayList<Integer> readMap(String filename) {
+    public static ArrayList<Node> readMap(String filename) {
 
         initializeXMLReader(filename);
-        ArrayList<Integer> values = new ArrayList<>();
+        ArrayList<Node> values = new ArrayList<>();
 
         try {
             int  readValue = 0;
@@ -53,42 +54,5 @@ public class XmlUtils {
             System.out.println("Reading error:\n" + e.getMessage());
         }
         return values;
-    }
-
-    private static void initializeWriterFileXml(String filename) {
-        try {
-            xmlOf = XMLOutputFactory.newInstance();
-            xmlW = xmlOf.createXMLStreamWriter(new FileOutputStream(filename), "utf-8");
-            xmlW.writeStartDocument("utf-8", "1.0");
-        } catch (Exception e) {
-            System.out.println("Error\n" + e.getMessage());
-            System.out.println("Reading error:\n" + e.getMessage());
-        }
-    }
-
-    public static void writeMap(ArrayList<String> data) {
-
-        String filename = "./Routes.xml";
-
-        initializeWriterFileXml(filename);
-
-        try {
-            xmlW.writeStartDocument();
-            xmlW.writeStartElement("routes");
-
-            xmlW.writeStartElement("nameElement");
-
-            xmlW.writeAttribute("attributeName", "attributeValue");
-
-            xmlW.writeEndElement(); // route
-
-            xmlW.writeEndDocument();
-
-            xmlW.flush();
-            xmlW.close();
-
-        } catch (XMLStreamException | NoSuchElementException e) {
-            System.out.println("Reading error:\n" + e.getMessage());
-        }
     }
 }

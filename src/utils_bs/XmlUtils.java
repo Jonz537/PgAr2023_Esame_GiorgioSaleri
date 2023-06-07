@@ -68,7 +68,7 @@ public class XmlUtils {
 
     public static HashMap<String, String> readCities(String filename) {
 
-        HashMap<String, String> cities = null;
+        HashMap<String, String> cities = new HashMap<>();
         initializeXMLReader(filename);
 
         try {
@@ -96,11 +96,10 @@ public class XmlUtils {
         initializeXMLReader(filename);
 
         ArrayList<Person> people = new ArrayList<>();
-
+        Person personToAdd = null;
 
         try {
             while (xmlR.hasNext()) {
-                Person personToAdd = null;
                 switch (xmlR.getEventType()) {
                     case XMLStreamConstants.START_ELEMENT -> {
                         switch (xmlR.getLocalName()) {

@@ -21,6 +21,7 @@ public class Main {
 
 
     public static void main(String[] args) {
+        UserInterface.printManySpaces();
         System.out.println("Welcome to \"that time that I've been transported to another world" +
                 " while I was doing an exam\"");
 
@@ -52,7 +53,8 @@ public class Main {
                     worlds.add(new World(maps.get(random.nextInt(0,3))));
                 }
                 case 1 -> {
-                    worlds.add(new TaxWorld(maps.get(random.nextInt(0,3))));
+//                    worlds.add(new TaxWorld(maps.get(random.nextInt(0,3))));
+                    worlds.add(new TaxWorld(defaultMap));
                 }
                 case 2 -> {
                     worlds.add(new TamaWorld(maps.get(random.nextInt(0,3))));

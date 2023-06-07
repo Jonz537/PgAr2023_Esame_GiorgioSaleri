@@ -114,14 +114,15 @@ public class Person {
 
     @Override
     public String toString() {
-        return "main.Person{" +
-                "name='" + name + '\'' +
+        return "name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
-                ", birthDate=" + birthdate.get(Calendar.WEEK_OF_YEAR) + "/" + birthdate.get(Calendar.MONTH) +
+                ", birthDate=" + birthdate.get(Calendar.DAY_OF_MONTH) + "/" + (birthdate.get(Calendar.MONTH) + 1) +
                 "/" + birthdate.get(Calendar.YEAR) +
                 ", sex=" + sex +
                 ", city='" + birthCity + '\'' +
                 ", taxIdCode='" + taxIdCode + '\'' +
+                ", expireDate='" + expireDate.get(Calendar.DAY_OF_MONTH) + "/" + (expireDate.get(Calendar.MONTH) + 1) +
+                "/" + expireDate.get(Calendar.YEAR) + '\'' +
                 '}';
     }
 }

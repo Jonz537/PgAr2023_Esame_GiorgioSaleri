@@ -47,7 +47,6 @@ public class Dijkstra {
                     distanceFromStart.put(map.get(i), 1.0);
 
                     ArrayList<Node> initialPath = new ArrayList<>();
-                    initialPath.add(currentNode);
                     pathFromStart.put(map.get(i), initialPath);
                 } else if (currentDistancePlusOne < distanceFromStart.getOrDefault(map.get(i), Double.MAX_VALUE/2)) {
                     // aggiorniamo la distanza del prossimo

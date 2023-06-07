@@ -80,6 +80,6 @@ public class Node {
 
     @Override
     public String toString() {
-        return "node id:" + id;
+        return String.valueOf(id);
     }
 }

@@ -1,5 +1,6 @@
 package main;
 
+import evasione_fiscale_simulator.Person;
 import monsters.Cammo;
 import monsters.Monster;
 import unibs.InputInterface;
@@ -9,6 +10,7 @@ import world_stuff.Node;
 import world_stuff.World;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class UserInterface {
 
@@ -81,6 +83,33 @@ public class UserInterface {
     public static void printPetAdivce(Node node, ArrayList<Node> map) {
         Dijkstra.pathFinder(node, map);
         printManySpaces();
-        System.out.println("Pet: \"The nyext best muv is the nyode with" + Dijkstra.returnNextMove(map.get(map.size() - 1)) + ", nyah!\"");
+        System.out.println("Pet: \"The nyext best muv is the nyode with id " + Dijkstra.returnNextMove(map.get(map.size() - 1)) + ", nyah!\"");
+    }
+
+    public static void printDate(Calendar today) {
+        System.out.println("today is: " + today.get(Calendar.DAY_OF_MONTH) + "-"
+                + (today.get(Calendar.MONTH) + 1) + "-"
+                + today.get(Calendar.YEAR));
+    }
+
+    public static void printPersonIdInfo(Person personToCheck) {
+        System.out.println(personToCheck.toString());
+    }
+
+    public static void printRightChoiceTax() {
+        printManySpaces();
+        System.out.println("You did a great job today");
+    }
+
+    public static void printWrongChoiceTax() {
+        System.out.println("YOU MADE A MISTAKE YOU FOOL");
+    }
+
+    public static void printMoneyPlayer(Player isekaiMc) {
+        System.out.println("You have: " + isekaiMc.getMoney() + "§");
+    }
+
+    public static void printSuccessfulCorruption() {
+        System.out.println("Thanks yo'. Yo' saved me there ");
     }
 }

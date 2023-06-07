@@ -10,6 +10,7 @@ public class Player {
     private int attack;
 
     private boolean taxEvader = false;
+    private int money = 1100;
 
     public Player(String name) {
         this.name = name;
@@ -18,6 +19,7 @@ public class Player {
         currentPosition = 0;
         healthPoint = 20;
         attack = 5;
+        money = 1100;
     }
 
     public int getLives() {
@@ -78,5 +80,17 @@ public class Player {
 
     public void setTaxEvader(boolean taxEvader) {
         this.taxEvader = taxEvader;
+    }
+
+    public int getMoney() {
+        return money;
+    }
+
+    public void setMoney(int money) {
+        this.money = money;
+    }
+
+    public void addMoney(int money) {
+        money += money;
     }
 }

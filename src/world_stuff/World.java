@@ -36,7 +36,7 @@ public class World {
 
         do {
             map.get(isekaiMc.getCurrentPosition()).setVisited(true);
-            MenuManager menuManager = new MenuManager("Where do you want to go?",
+            MenuManager menuManager = new MenuManager("Where do you want to go?\nn - id",
                     getNextChoices(isekaiMc));
 
 

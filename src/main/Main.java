@@ -71,6 +71,4 @@ public class Main {
         defaultMap.add(new Node(5, NodeType.INTERMEDIO, new HashSet<>(List.of(6))));
         defaultMap.add(new Node(6, NodeType.FINE, new HashSet<>(List.of())));
     }
-
-
 }

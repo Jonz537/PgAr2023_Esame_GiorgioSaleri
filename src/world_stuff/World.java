@@ -2,17 +2,19 @@ package world_stuff;
 
 import main.Player;
 import main.UserInterface;
+import monsters.Cammo;
+import monsters.Monster;
 import unibs.MenuManager;
 import utils_bs.NodeType;
-import utils_bs.XmlUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Vector;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class World {
 
     private boolean isDefeated;
+    private Random random = new Random();
 
     private ArrayList<Node> map;
 
@@ -35,20 +37,76 @@ public class World {
             map.get(isekaiMc.getCurrentPosition()).setVisited(true);
             MenuManager menuManager = new MenuManager("Where do you want to go?",
                     getNextChoices(isekaiMc));
-            nextPos = menuManager.chooseNoExit();
+            nextPos = Integer.parseInt(menuManager.chooseStringNoExit());
 
-            battle(isekaiMc);
+            exploreNode(isekaiMc, nextPos);
 
             isekaiMc.setCurrentPosition(nextPos);
-        } while (!map.get(isekaiMc.getCurrentPosition()).getType().equals(NodeType.FINE)
-        || isekaiMc.getHealthPoint() >= 0);
+
+            if (map.get(isekaiMc.getCurrentPosition()).getType().equals(NodeType.FINE)) {
+                worldDefeated(isekaiMc);
+                break;
+            } else if (isekaiMc.getHealthPoint() <= 0) {
+                death(isekaiMc);
+                break;
+            }
+
+        } while (true);
 
     }
 
-    public void battle(Player isekaiMc) {
+    public void exploreNode(Player isekaiMc, int battlePos) {
         UserInterface.printPlayerStatus(isekaiMc);
 
+        if (map.get(battlePos).getType().equals(NodeType.FINE)) {
+            battle(isekaiMc, new Cammo());
+        } else {
+            switch (random.nextInt(0,2)) {
+                case 0 -> {
+                    new Event().playerInteract(isekaiMc);
+                }
+                case 1 -> {
+                    battle(isekaiMc, new Monster());
+                }
+            }
+        }
 
+    }
+
+    public void battle(Player isekaiMc, Monster boss) {
+        int round = 0;
+        while(boss.getHealthPoints() > 0 && isekaiMc.getHealthPoint() > 0) {
+            round = (round + 1) % 2;
+            if (round == 1) {
+                // player turn
+                boss.getAttackedByPlayer(isekaiMc);
+            } else {
+                // boss turn
+                boss.attackPlayer(isekaiMc);
+            }
+            UserInterface.printBattleInfo(isekaiMc, boss);
+
+            // waiting
+            try {
+                TimeUnit.MILLISECONDS.sleep(3500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (boss.getHealthPoints() < 0) {
+            UserInterface.printWonFight(isekaiMc);
+        }
+    }
+
+    public void death(Player isekaiMc) {
+        isekaiMc.lostLife();
+        UserInterface.printDeath(isekaiMc);
+    }
+
+    public void worldDefeated(Player isekaiMc) {
+        isekaiMc.addPoints(10);
+        UserInterface.printWorldDefeated(isekaiMc);
     }
 
     public String[] getNextChoices(Player isekaiMc) {

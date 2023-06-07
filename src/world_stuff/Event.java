@@ -1,6 +1,7 @@
 package world_stuff;
 
 import main.Player;
+import main.UserInterface;
 
 import java.util.Random;
 
@@ -29,6 +30,8 @@ public class Event {
         } else {
             isekaiMc.addHealthPoint(mod);
         }
+
+        UserInterface.printInteractEvent(mod, eventType);
     }
 
 }

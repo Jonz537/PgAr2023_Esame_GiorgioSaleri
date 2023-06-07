@@ -46,8 +46,8 @@ public class Player {
         this.name = name;
     }
 
-    public void setLives(int lives) {
-        this.lives = lives;
+    public void lostLife() {
+        this.lives--;
     }
 
     public void setPoints(int points) {

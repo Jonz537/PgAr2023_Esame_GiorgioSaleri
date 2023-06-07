@@ -12,7 +12,6 @@ public class Node {
     private boolean isVisited;
 
     private NodeType type;
-    private Monster boss;
 
     private Set<Integer> adjacentNodes = new HashSet<>() {
     };

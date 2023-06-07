@@ -3,14 +3,18 @@ package main;
 import evasione_fiscale_simulator.Person;
 import monsters.Cammo;
 import monsters.Monster;
+import tamagolem.TamaGolem;
+import tamagolem.Universe;
 import unibs.InputInterface;
 import utils_bs.Dijkstra;
 import utils_bs.EventType;
 import world_stuff.Node;
+import world_stuff.TamaWorld;
 import world_stuff.World;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
 public class UserInterface {
 
@@ -114,5 +118,37 @@ public class UserInterface {
 
     public static void printSuccessfulCorruption() {
         System.out.println("Thanks yo'. Yo' saved me there ");
+    }
+
+    public static void printDeathTamaWorld(Player isekaiMc) {
+        System.out.println("You ran out of tamagolem! You are defenceless and died a horrible death ");
+    }
+
+    public static void printPlayerStatusGolem(Player isekaiMc) {
+        System.out.println(isekaiMc.getName() + " has " + isekaiMc.getTamaGolems().size());
+    }
+
+    public static void printTamagolemStatus(TamaGolem tamaGolem) {
+        System.out.println(tamaGolem.toString());
+    }
+
+    public static void maxHealthGolem() {
+        System.out.println("Cheers to you! All your stones are now full hp!");
+    }
+
+    public static void deathOneTamagolem(Player isekaiMc) {
+        System.out.println("Bad event: one of your pokemon...ehm, tamagolem is dead!");
+        System.out.println("Tamagolem left: " + isekaiMc.getTamaGolems().size());
+    }
+
+    public static String menuChooseGem(HashMap<String, Integer> choices, Player player, int num_tama, int num__gem) {
+
+        System.out.println("\n" + player.getName() + " choose gem number " + num__gem +" for tamagolem number " + num_tama + ":");
+
+        for (int i = 0; i < choices.size(); i++) {
+            System.out.println(i + 1 + " - " + Universe.elements.get(i) + " (" + choices.get(Universe.elements.get(i)) + ")");
+        }
+
+        return Universe.elements.get(InputInterface.readInt("Choice: ", 1, choices.size()) - 1);
     }
 }

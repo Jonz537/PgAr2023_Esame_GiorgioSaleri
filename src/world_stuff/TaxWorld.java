@@ -52,20 +52,7 @@ public class TaxWorld extends World{
         today.add(Calendar.DATE, 1);
 
         do {
-            map.get(isekaiMc.getCurrentPosition()).setVisited(true);
-
-            MenuManager menuManager = new MenuManager("Where do you want to go?\nn - id",
-                    getNextChoices(isekaiMc));
-
-
-            //Dijkstra stuff
-            UserInterface.printPetAdivce(map.get(isekaiMc.getCurrentPosition()), map);
-
-            nextPos = Integer.parseInt(menuManager.chooseStringNoExit());
-
-            // update pos and explore
-            exploreNode(isekaiMc, nextPos);
-            isekaiMc.setCurrentPosition(nextPos);
+            nextPos = super.playerMovement(isekaiMc);
 
             // print date and money only for this type of world
             UserInterface.printMoneyPlayer(isekaiMc);

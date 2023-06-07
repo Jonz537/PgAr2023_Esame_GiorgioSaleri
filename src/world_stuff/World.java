@@ -1,5 +1,6 @@
 package world_stuff;
 
+import event_handler.Event;
 import main.Player;
 import main.UserInterface;
 import monsters.Cammo;
@@ -26,6 +27,29 @@ public class World {
         return "Dungeon crawler";
     }
 
+    public int playerMovement(Player isekaiMc) {
+        int nextPos = 0;
+
+        map.get(isekaiMc.getCurrentPosition()).setVisited(true);
+        MenuManager menuManager = new MenuManager("Where do you want to go?\nn - id",
+                getNextChoices(isekaiMc));
+
+        // Dijkstra stuff here
+        UserInterface.printPetAdivce(map.get(isekaiMc.getCurrentPosition()), map);
+
+        // ask question
+        nextPos = Integer.parseInt(menuManager.chooseStringNoExit());
+
+        //explore the node the player chose
+        this.exploreNode(isekaiMc, nextPos);
+
+        //update player position
+        isekaiMc.setCurrentPosition(nextPos);
+
+
+        return nextPos;
+    }
+
     public void start(Player isekaiMc) {
         map.forEach(Node::setUnvisited);
         // fix stuff for the graph
@@ -36,21 +60,7 @@ public class World {
 
         do {
             // set visited so the player cannot go back
-            map.get(isekaiMc.getCurrentPosition()).setVisited(true);
-            MenuManager menuManager = new MenuManager("Where do you want to go?\nn - id",
-                    getNextChoices(isekaiMc));
-
-            // Dijkstra stuff here
-            UserInterface.printPetAdivce(map.get(isekaiMc.getCurrentPosition()), map);
-
-            // ask question
-            nextPos = Integer.parseInt(menuManager.chooseStringNoExit());
-
-            //explore the node the player chose
-            exploreNode(isekaiMc, nextPos);
-
-            //update player position
-            isekaiMc.setCurrentPosition(nextPos);
+            nextPos = playerMovement(isekaiMc);
 
             if (map.get(isekaiMc.getCurrentPosition()).getType().equals(NodeType.FINE)) {
                 worldDefeated(isekaiMc);
@@ -84,7 +94,6 @@ public class World {
                 }
             }
         }
-
     }
 
     /**

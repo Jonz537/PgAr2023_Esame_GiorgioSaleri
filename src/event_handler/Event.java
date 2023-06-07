@@ -1,4 +1,4 @@
-package world_stuff;
+package event_handler;
 
 import main.Player;
 import main.UserInterface;
@@ -8,14 +8,14 @@ import java.util.Random;
 
 public class Event {
 
-    private EventType eventType;
-    private int mod;
-
+    protected EventType eventType;
+    protected int mod;
+    protected Random random = new Random();
     /**
      * create a random event
      */
     public Event() {
-        Random random = new Random();
+
         switch (random.nextInt(0,2)) {
             case 0 -> {
                 eventType = EventType.DAMAGE;
@@ -38,8 +38,6 @@ public class Event {
         } else {
             isekaiMc.addHealthPoint(mod);
         }
-
-        UserInterface.printInteractEvent(mod, eventType);
     }
 
 }

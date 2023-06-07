@@ -22,30 +22,37 @@ public class XmlUtils {
         }
     }
 
-    public static ArrayList<Node> readMap(String filename) {
+    public static ArrayList<ArrayList<Node>> readMaps(String filename) {
 
         initializeXMLReader(filename);
-        ArrayList<Node> values = new ArrayList<>();
+
+        ArrayList<ArrayList<Node>> values = new ArrayList<>();
+
+        ArrayList<Node> map = null;
+        Node nodeToAdd = null;
 
         try {
-            int  readValue = 0;
             while (xmlR.hasNext()) {
                 switch (xmlR.getEventType()) {
                     case XMLStreamConstants.START_ELEMENT -> {
-                        if (xmlR.getLocalName().equals("elementName")) {
-
-                        } else if (xmlR.getLocalName().equals("otherElementName")) {
-
+                        if (xmlR.getLocalName().equals("MAPPA")) {
+                            map = new ArrayList<>();
+                        } else if (xmlR.getLocalName().equals("NODO")) {
+                            nodeToAdd = new Node(Integer.parseInt(xmlR.getAttributeValue(0)) - 1);
+                        } else if (xmlR.getLocalName().equals("TIPO") && nodeToAdd != null) {
+                            xmlR.next();
+                            nodeToAdd.setType(NodeType.valueOf(xmlR.getText()));
+                        } else if (xmlR.getLocalName().equals("COLLEGAMENTO") && nodeToAdd != null) {
+                            xmlR.next();
+                            nodeToAdd.addAdjacentNode(Integer.parseInt(xmlR.getText()) - 1);
                         }
                     }
                     case XMLStreamConstants.END_ELEMENT -> {
-
-                    }
-                    case XMLStreamConstants.START_DOCUMENT -> {
-
-                    }
-                    case XMLStreamConstants.END_DOCUMENT -> {
-
+                        if (xmlR.getLocalName().equals("MAPPA") && map != null) {
+                            values.add(map);
+                        } else if (xmlR.getLocalName().equals("NODO") && nodeToAdd != null) {
+                            map.add(nodeToAdd);
+                        }
                     }
                 }
                 xmlR.next();

@@ -10,6 +10,7 @@ import java.util.Vector;
 public class Node {
     private int id;
     private boolean isVisited;
+    private boolean isVisitedByDijkstra;
 
     private NodeType type;
 
@@ -59,5 +60,26 @@ public class Node {
 
     public int getId() {
         return id;
+    }
+
+    public boolean isVisitedByDijkstra() {
+        return isVisitedByDijkstra;
+    }
+
+    public static void setUnvisited(Node node) {
+        node.setVisited(false);
+    }
+
+    public void setVisitedByDijkstra(Boolean visited) {
+        isVisitedByDijkstra = visited;
+    }
+
+    public static void setVisitedByDijkstra(Node node) {
+        node.setVisitedByDijkstra(false);
+    }
+
+    @Override
+    public String toString() {
+        return "node id:" + id;
     }
 }

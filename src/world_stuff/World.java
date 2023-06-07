@@ -29,7 +29,9 @@ public class World {
 
     public void start(Player isekaiMc) {
 
+        map.forEach(Node::setUnvisited);
         doubleGraph();
+        isekaiMc.setCurrentPosition(0);
 
         int nextPos = 0;
 
@@ -37,7 +39,11 @@ public class World {
             map.get(isekaiMc.getCurrentPosition()).setVisited(true);
             MenuManager menuManager = new MenuManager("Where do you want to go?",
                     getNextChoices(isekaiMc));
+
+
+            UserInterface.printPetAdivce(map.get(isekaiMc.getCurrentPosition()), map);
             nextPos = Integer.parseInt(menuManager.chooseStringNoExit());
+
 
             exploreNode(isekaiMc, nextPos);
 
@@ -105,7 +111,9 @@ public class World {
     }
 
     public void worldDefeated(Player isekaiMc) {
-        isekaiMc.addPoints(10);
+        if (!isDefeated) {
+            isekaiMc.addPoints(10);
+        }
         UserInterface.printWorldDefeated(isekaiMc);
     }
 
@@ -114,7 +122,7 @@ public class World {
         // TODO vicolo cieco
         for (Integer i: map.get(isekaiMc.getCurrentPosition()).getAdjacentNodes()) {
             if (!map.get(i).isVisited()) {
-                aString.add(i.toString());
+                aString.add(map.get(i).toString());
             }
         }
 
@@ -125,6 +133,7 @@ public class World {
 
         return choices;
     }
+
 
     public void doubleGraph() {
         for (Node node: map) {

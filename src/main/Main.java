@@ -48,7 +48,8 @@ public class Main {
         for (int i = 0; i < WOLRDS_NUMBERS; i++) {
             switch (random.nextInt(0,3)) {
                 case 0 -> {
-                    worlds.add(new World(maps.get(random.nextInt(0,3))));
+//                    worlds.add(new World(maps.get(random.nextInt(0,3))));
+                    worlds.add(new World(defaultMap));
                 }
                 case 1 -> {
                     worlds.add(new TaxWorld(maps.get(random.nextInt(0,3))));

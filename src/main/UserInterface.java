@@ -3,7 +3,9 @@ package main;
 import monsters.Cammo;
 import monsters.Monster;
 import unibs.InputInterface;
+import utils_bs.Dijkstra;
 import world_stuff.EventType;
+import world_stuff.Node;
 import world_stuff.World;
 
 import java.util.ArrayList;
@@ -67,5 +69,10 @@ public class UserInterface {
 
     public static void printWonFight(Player isekaiMc) {
         System.out.println("The cursed champions falls!");
+    }
+
+    public static void printPetAdivce(Node node, ArrayList<Node> map) {
+        Dijkstra.pathFinder(node, map);
+        System.out.println("The nyext best muv is the nyode with" + Dijkstra.returnNextMove(map.get(map.size() - 1)) + ", nyah!");
     }
 }

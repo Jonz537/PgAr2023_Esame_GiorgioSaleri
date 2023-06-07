@@ -13,10 +13,9 @@ import java.util.concurrent.TimeUnit;
 
 public class World {
 
-    private boolean isDefeated;
-    private Random random = new Random();
-
-    private ArrayList<Node> map;
+    protected boolean isDefeated;
+    protected Random random = new Random();
+    protected ArrayList<Node> map;
 
     public World(ArrayList<Node> map) {
         this.map = map;
@@ -43,7 +42,6 @@ public class World {
 
             UserInterface.printPetAdivce(map.get(isekaiMc.getCurrentPosition()), map);
             nextPos = Integer.parseInt(menuManager.chooseStringNoExit());
-
 
             exploreNode(isekaiMc, nextPos);
 

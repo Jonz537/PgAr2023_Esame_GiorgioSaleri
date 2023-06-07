@@ -9,6 +9,8 @@ public class Player {
     private int healthPoint;
     private int attack;
 
+    private boolean taxEvader = false;
+
     public Player(String name) {
         this.name = name;
         lives = 10;
@@ -68,5 +70,13 @@ public class Player {
 
     public void addAttack(int attackToAdd) {
         attack += attackToAdd;
+    }
+
+    public boolean isTaxEvader() {
+        return taxEvader;
+    }
+
+    public void setTaxEvader(boolean taxEvader) {
+        this.taxEvader = taxEvader;
     }
 }

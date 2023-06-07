@@ -2,6 +2,7 @@ package world_stuff;
 
 import main.Player;
 import main.UserInterface;
+import utils_bs.EventType;
 
 import java.util.Random;
 

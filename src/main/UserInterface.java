@@ -4,7 +4,7 @@ import monsters.Cammo;
 import monsters.Monster;
 import unibs.InputInterface;
 import utils_bs.Dijkstra;
-import world_stuff.EventType;
+import utils_bs.EventType;
 import world_stuff.Node;
 import world_stuff.World;
 
@@ -48,6 +48,13 @@ public class UserInterface {
         System.out.println("You died... once\nLives left: " + isekaiMc.getLives());
     }
 
+    public static void printJail(Player isekaiMc) {
+        printManySpaces();
+        // Tax evasion is a crime Vergil
+        // IT'S AN OBLIGATION
+        System.out.println("You've been given a death sentence for corruption\nLives left: " + isekaiMc.getLives());
+    }
+
     public static void printWorldDefeated(Player isekaiMc) {
         printManySpaces();
         System.out.println("You survived this world \nPoints: " + isekaiMc.getPoints());
@@ -73,6 +80,7 @@ public class UserInterface {
 
     public static void printPetAdivce(Node node, ArrayList<Node> map) {
         Dijkstra.pathFinder(node, map);
-        System.out.println("The nyext best muv is the nyode with" + Dijkstra.returnNextMove(map.get(map.size() - 1)) + ", nyah!");
+        printManySpaces();
+        System.out.println("Pet: \"The nyext best muv is the nyode with" + Dijkstra.returnNextMove(map.get(map.size() - 1)) + ", nyah!\"");
     }
 }

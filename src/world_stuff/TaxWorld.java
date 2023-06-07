@@ -24,7 +24,11 @@ public class TaxWorld extends World{
 
     public TaxWorld(ArrayList<Node> map) {
         super(map);
+
+        //set date to 07/06/2023
         today = new GregorianCalendar(2023, Calendar.JUNE, 7);
+
+        // if we haven't read the XML we do that
         if (people.isEmpty() || cities.isEmpty()) {
             cities = XmlUtils.readCities("Comuni.xml");
             people = XmlUtils.readPeople("PersoneID.xml");
@@ -53,23 +57,30 @@ public class TaxWorld extends World{
             MenuManager menuManager = new MenuManager("Where do you want to go?\nn - id",
                     getNextChoices(isekaiMc));
 
+
+            //Dijkstra stuff
             UserInterface.printPetAdivce(map.get(isekaiMc.getCurrentPosition()), map);
 
             nextPos = Integer.parseInt(menuManager.chooseStringNoExit());
 
+            // update pos and explore
             exploreNode(isekaiMc, nextPos);
             isekaiMc.setCurrentPosition(nextPos);
 
+            // print date and money only for this type of world
             UserInterface.printMoneyPlayer(isekaiMc);
             today.add(Calendar.DATE, 1);
 
+            // last node
             if (map.get(isekaiMc.getCurrentPosition()).getType().equals(NodeType.FINE)) {
+                // enough money or not
                 if (isekaiMc.getMoney() >= FINAL_TAX) {
                     worldDefeated(isekaiMc);
                     break;
                 } else {
                     goToJailTax(isekaiMc);
                 }
+                // failed corruption
             } else if (isekaiMc.isTaxEvader()) {
                 goToJail(isekaiMc);
                 try {
@@ -110,11 +121,19 @@ public class TaxWorld extends World{
 
     }
 
+    /**
+     * if the player makes a mistake
+     * @param isekaiMc player
+     */
     private void errorTax(Player isekaiMc) {
         isekaiMc.addMoney(-300);
         UserInterface.printWrongChoiceTax();
     }
 
+    /**
+     * if the player is being corrupted
+     * @param isekaiMc player
+     */
     public void corruption(Player isekaiMc) {
         boolean isAmicoDelleGuardie = random.nextInt(0, 10) > -2;
         int bigMoney = random.nextInt(250, 501);
@@ -128,11 +147,19 @@ public class TaxWorld extends World{
         }
     }
 
+    /**
+     * the player has been beccato dagli amici delle guardie
+     * @param isekaiMc player
+     */
     public void goToJail(Player isekaiMc) {
         isekaiMc.lostLife();
         UserInterface.printJail(isekaiMc);
     }
 
+    /**
+     * if the player hasn't got enough money for end node
+     * @param isekaiMc player
+     */
     private void goToJailTax(Player isekaiMc) {
         isekaiMc.lostLife();
         UserInterface.printJailTax(isekaiMc);

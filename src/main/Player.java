@@ -2,6 +2,9 @@ package main;
 
 public class Player {
 
+    /**
+     * Modulo 1
+     */
     private String name;
     private int lives;
     private int points;
@@ -9,6 +12,9 @@ public class Player {
     private int healthPoint;
     private int attack;
 
+    /**
+     * 5.4.2 Modulo patente e libbretto prego
+     */
     private boolean taxEvader = false;
     private int money = 1100;
 

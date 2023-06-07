@@ -25,6 +25,11 @@ public class XmlUtils {
         }
     }
 
+    /**
+     * read maps from the xml
+     * @param filename filename
+     * @return 2 cities read
+     */
     public static ArrayList<ArrayList<Node>> readMaps(String filename) {
 
         initializeXMLReader(filename);
@@ -66,6 +71,11 @@ public class XmlUtils {
         return values;
     }
 
+    /**
+     * read cities from xml
+     * @param filename filename
+     * @return list of cities
+     */
     public static HashMap<String, String> readCities(String filename) {
 
         HashMap<String, String> cities = new HashMap<>();
@@ -91,6 +101,11 @@ public class XmlUtils {
         return cities;
     }
 
+    /**
+     * read people from Xml
+     * @param filename filaname
+     * @return list of people
+     */
     public static ArrayList<Person> readPeople(String filename) {
 
         initializeXMLReader(filename);

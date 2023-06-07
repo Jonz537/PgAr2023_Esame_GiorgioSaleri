@@ -11,6 +11,9 @@ public class Event {
     private EventType eventType;
     private int mod;
 
+    /**
+     * create a random event
+     */
     public Event() {
         Random random = new Random();
         switch (random.nextInt(0,2)) {
@@ -25,6 +28,10 @@ public class Event {
         }
     }
 
+    /**
+     *  based on the event we modify player's stats
+     * @param isekaiMc player
+     */
     public void playerInteract(Player isekaiMc) {
         if (eventType.equals(EventType.DAMAGE)) {
             isekaiMc.addAttack(mod);

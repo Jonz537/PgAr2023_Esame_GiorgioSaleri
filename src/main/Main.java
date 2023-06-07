@@ -48,16 +48,12 @@ public class Main {
 
         for (int i = 0; i < WOLRDS_NUMBERS; i++) {
 //            switch (random.nextInt(0,3)) {
-            switch (random.nextInt(1,2)) {
-                case 0 -> {
-                    worlds.add(new World(maps.get(random.nextInt(0,3))));
-                }
-                case 1 -> {
-//                    worlds.add(new TaxWorld(maps.get(random.nextInt(0,3))));
-                    worlds.add(new TaxWorld(defaultMap));
-                }
+            switch (random.nextInt(2,3)) {
+                case 0 -> worlds.add(new World(maps.get(random.nextInt(0,3))));
+                case 1 -> worlds.add(new TaxWorld(maps.get(random.nextInt(0,3))));
                 case 2 -> {
-                    worlds.add(new TamaWorld(maps.get(random.nextInt(0,3))));
+//                    worlds.add(new TamaWorld(maps.get(random.nextInt(0,3))));
+                    worlds.add(new TamaWorld(defaultMap));
                 }
             }
             worldTypeList[i] = worlds.get(i).getType();

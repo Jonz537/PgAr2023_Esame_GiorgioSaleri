@@ -5,15 +5,20 @@ import utils_bs.NodeType;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.Vector;
 
 public class Node {
+
+    /**
+     * world's stuff
+     */
     private int id;
     private boolean isVisited;
-    private boolean isVisitedByDijkstra;
-
     private NodeType type;
 
+    /**
+     * dijkstra's stuff
+     */
+    private boolean isVisitedByDijkstra;
     private Set<Integer> adjacentNodes = new HashSet<>() {
     };
 

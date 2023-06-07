@@ -64,10 +64,19 @@ public class TaxWorld extends World{
             today.add(Calendar.DATE, 1);
 
             if (map.get(isekaiMc.getCurrentPosition()).getType().equals(NodeType.FINE)) {
-                worldDefeated(isekaiMc);
-                break;
+                if (isekaiMc.getMoney() >= FINAL_TAX) {
+                    worldDefeated(isekaiMc);
+                    break;
+                } else {
+                    goToJailTax(isekaiMc);
+                }
             } else if (isekaiMc.isTaxEvader()) {
                 goToJail(isekaiMc);
+                try {
+                    TimeUnit.MILLISECONDS.sleep(1500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 break;
             }
 
@@ -88,7 +97,7 @@ public class TaxWorld extends World{
         if (!isLegal && choice) {
             corruption(isekaiMc);
         }else if (isLegal && !choice ) {
-            UserInterface.printRightChoiceTax();
+            UserInterface.printRightChoiceTax(isekaiMc);
         } else {
             errorTax(isekaiMc);
         }
@@ -107,7 +116,7 @@ public class TaxWorld extends World{
     }
 
     public void corruption(Player isekaiMc) {
-        boolean isAmicoDelleGuardie = random.nextInt(0, 10) > 8;
+        boolean isAmicoDelleGuardie = random.nextInt(0, 10) > -2;
         int bigMoney = random.nextInt(250, 501);
         boolean choice = InputInterface.askTrueOrFalse("I'll give yo' " + bigMoney + "§ if yo' let me git", "yes", "no");
 
@@ -122,6 +131,11 @@ public class TaxWorld extends World{
     public void goToJail(Player isekaiMc) {
         isekaiMc.lostLife();
         UserInterface.printJail(isekaiMc);
+    }
+
+    private void goToJailTax(Player isekaiMc) {
+        isekaiMc.lostLife();
+        UserInterface.printJailTax(isekaiMc);
     }
 
     @Override

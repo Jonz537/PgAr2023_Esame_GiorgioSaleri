@@ -50,10 +50,13 @@ public class UserInterface {
         System.out.println("You died... once\nLives left: " + isekaiMc.getLives());
     }
 
+    public static void printJailTax(Player isekaiMc) {
+        printManySpaces();
+        System.out.println("TAX EVASION IS A CRIME VERGIL!\nLives left: " + isekaiMc.getLives());
+    }
+
     public static void printJail(Player isekaiMc) {
         printManySpaces();
-        // Tax evasion is a crime Vergil
-        // IT'S AN OBLIGATION
         System.out.println("You've been given a death sentence for corruption\nLives left: " + isekaiMc.getLives());
     }
 
@@ -96,9 +99,9 @@ public class UserInterface {
         System.out.println(personToCheck.toString());
     }
 
-    public static void printRightChoiceTax() {
+    public static void printRightChoiceTax(Player isekaiMc) {
         printManySpaces();
-        System.out.println("You did a great job today");
+        System.out.println("You did a great job today, " + isekaiMc.getName());
     }
 
     public static void printWrongChoiceTax() {
